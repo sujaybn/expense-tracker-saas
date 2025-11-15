@@ -17,8 +17,4 @@ public class Tenant {
 
     @Column(nullable = false, unique = true)
     private String name;
-
-    // optional fields if you want
-    private String address;
-    private String contactEmail;
 }

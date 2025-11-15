@@ -80,4 +80,14 @@ public class ExpenseService {
                 .map(this::mapToExpenseResponse)
                 .toList();
     }
+
+    // ===========================
+    // GET ALL EXPENSES
+    // ===========================
+    public ExpenseResponse getExpenseById(Long id) {
+    Expense expense = expenseRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+        return mapToExpenseResponse(expense);
+        }
 }

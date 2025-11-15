@@ -24,11 +24,15 @@ public class ExpenseController {
     public ResponseEntity<ExpenseResponse> createExpense(@RequestBody ExpenseRequest request,Principal principal) {
     String email = principal.getName();
     return ResponseEntity.ok(expenseService.createExpense(request, email));
-}
+    }
 
     @GetMapping
     public ResponseEntity<List<ExpenseResponse>> getAllExpenses() {
         return ResponseEntity.ok(expenseService.getAllExpenses());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ExpenseResponse> getExpense(@PathVariable Long id) {
+    return ResponseEntity.ok(expenseService.getExpenseById(id));
     }
 
 }

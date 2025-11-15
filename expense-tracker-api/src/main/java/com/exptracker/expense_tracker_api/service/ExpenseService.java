@@ -118,4 +118,13 @@ public class ExpenseService {
 
         return mapToExpenseResponse(updated);
         }
+
+
+            // DELETE
+    public void deleteExpense(Long id) {
+        if (!expenseRepository.existsById(id)) {
+            throw new RuntimeException("Expense not found");
+        }
+        expenseRepository.deleteById(id);
+    }
 }

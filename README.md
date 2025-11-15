@@ -113,7 +113,7 @@ erDiagram
     }
 ```
 
-# Other one
+# Multi-tenant DB design (draft)
 ```mermaid
 erDiagram
     TENANTS ||--o{ DEPARTMENTS : owns

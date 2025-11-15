@@ -2,6 +2,7 @@ package com.exptracker.expense_tracker_api.controller;
 
 import com.exptracker.expense_tracker_api.dto.LoginRequest;
 import com.exptracker.expense_tracker_api.dto.RegisterRequest;
+import com.exptracker.expense_tracker_api.dto.UserResponse;
 import com.exptracker.expense_tracker_api.entity.User;
 import com.exptracker.expense_tracker_api.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request) {
+    public UserResponse register(@RequestBody RegisterRequest request) {
         return authService.register(request);
     }
 

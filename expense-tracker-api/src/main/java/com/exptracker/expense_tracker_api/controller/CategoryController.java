@@ -6,6 +6,7 @@ import com.exptracker.expense_tracker_api.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('TENANT_ADMIN') or hasRole('SUPER_ADMIN')")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -24,7 +26,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> getCategories(
-            @RequestParam Long tenantId   // <-- REQUIRED
+            @RequestParam Long tenantId 
     ) {
         return ResponseEntity.ok(categoryService.getAllCategories(tenantId));
     }

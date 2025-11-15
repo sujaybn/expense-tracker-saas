@@ -25,10 +25,6 @@ public class ExpenseService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
 
-
-    // ===========================
-    // CREATE
-    // ===========================
     public ExpenseResponse createExpense(ExpenseRequest req, String email) {
 
         User user = userRepository.findByEmail(email)
@@ -54,10 +50,6 @@ public class ExpenseService {
         return mapToExpenseResponse(saved);
     }
 
-
-    // ===========================
-    // MAPPER
-    // ===========================
     private ExpenseResponse mapToExpenseResponse(Expense expense) {
         return ExpenseResponse.builder()
                 .id(expense.getId())
@@ -70,10 +62,6 @@ public class ExpenseService {
                 .build();
     }
 
-
-    // ===========================
-    // GET ALL EXPENSES
-    // ===========================
     public List<ExpenseResponse> getAllExpenses() {
         return expenseRepository.findAll()
                 .stream()
@@ -81,18 +69,13 @@ public class ExpenseService {
                 .toList();
     }
 
-    // ===========================
-    // GET ALL EXPENSE BY ID
-    // ===========================
     public ExpenseResponse getExpenseById(Long id) {
     Expense expense = expenseRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Expense not found"));
 
         return mapToExpenseResponse(expense);
         }
-    // ===========================
-    // UPDATE EXPENSE BY ID
-    // ===========================
+
         public ExpenseResponse updateExpense(Long id, ExpenseRequest req, String email) {
 
         Expense existing = expenseRepository.findById(id)
@@ -119,8 +102,6 @@ public class ExpenseService {
         return mapToExpenseResponse(updated);
         }
 
-
-            // DELETE
     public void deleteExpense(Long id) {
         if (!expenseRepository.existsById(id)) {
             throw new RuntimeException("Expense not found");

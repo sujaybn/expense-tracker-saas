@@ -82,12 +82,40 @@ public class ExpenseService {
     }
 
     // ===========================
-    // GET ALL EXPENSES
+    // GET ALL EXPENSE BY ID
     // ===========================
     public ExpenseResponse getExpenseById(Long id) {
     Expense expense = expenseRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Expense not found"));
 
         return mapToExpenseResponse(expense);
+        }
+    // ===========================
+    // UPDATE EXPENSE BY ID
+    // ===========================
+        public ExpenseResponse updateExpense(Long id, ExpenseRequest req, String email) {
+
+        Expense existing = expenseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Category category = categoryRepository.findById(req.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        Tenant tenant = tenantRepository.findById(req.getTenantId())
+                .orElseThrow(() -> new RuntimeException("Tenant not found"));
+
+        existing.setAmount(req.getAmount());
+        existing.setDescription(req.getDescription());
+        existing.setDate(req.getDate());
+        existing.setCategory(category);
+        existing.setTenant(tenant);
+        existing.setUser(user);
+
+        Expense updated = expenseRepository.save(existing);
+
+        return mapToExpenseResponse(updated);
         }
 }

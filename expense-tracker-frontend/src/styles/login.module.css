@@ -1,0 +1,33 @@
+.container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  text-align: center;
+}
+
+.container input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.container button {
+  width: 100%;
+  padding: 10px;
+  background: #0070f3;
+  color: white;
+  border: none;
+  transition: 0.2s;
+}
+
+.container button:hover {
+  background: #005bb5;
+}
+
+.message {
+  color: red;
+  margin-top: 10px;
+}

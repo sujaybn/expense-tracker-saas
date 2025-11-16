@@ -19,7 +19,11 @@ INSERT INTO categories (name, tenant_id) VALUES ('General', 1);
 
 ALTER TABLE users ADD COLUMN name VARCHAR(255);
 
+SELECT * from tenants;
 
+UPDATE users
+SET role = 'MANAGER'
+WHERE id =10;
 
 INSERT INTO users (
     email,
@@ -33,3 +37,6 @@ INSERT INTO users (
     'SUPER_ADMIN',
     1,
     'Albus');
+
+
+

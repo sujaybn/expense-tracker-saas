@@ -8,78 +8,80 @@ export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // Load logged-in user from localStorage
-  useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  if (!storedUser) {
-    router.push("/"); 
-    return;
-  }
-
-  const parsedUser = JSON.parse(storedUser);
-  setUser(parsedUser);
-
-  const fetchExpenses = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch("http://localhost:8080/api/expenses", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Failed to fetch expenses");
-      const data = await res.json();
-      setExpenses(data);
-    } catch (err) {
-      console.error(err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const [total_expenses, setTotalExpenses] =useState({});
+  const  categories =  {
+     3: "Travel",
+     4: "Bank",
+     5: "Office Supplies "
   };
 
-  fetchExpenses();
-}, [router]);
 
-  // Fetch expenses if user is a manager
   useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  if (!storedUser) {
-    router.push("/"); // redirect if not logged in
-    return;
-  }
+    console.log(expenses);    
+    const currentTotal = {
+      ...total_expenses
+    }; 
+    expenses.forEach(
+      expense => {
+        const catId = expense.categoryId;
+        const categoryName = categories[catId];
+        if(!currentTotal[categoryName]){
+          currentTotal[categoryName] = expense.amount;
+        }
+        else{
+          currentTotal[categoryName] = currentTotal[categoryName]+ expense.amount;
+        }
+      }
+    )
+    console.log(currentTotal);
+    setTotalExpenses(currentTotal);
+  }, [expenses]);
 
-  const parsedUser = JSON.parse(storedUser);
-  setUser(parsedUser);
-
-  // fetch expenses only after user is loaded
   const fetchExpenses = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch("http://localhost:8080/api/expenses", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Failed to fetch expenses");
-      const data = await res.json();
-      setExpenses(data);
-    } catch (err) {
-      console.error("Failed to fetch expenses:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+      setLoading(true);
+      setError("");
+      try {
+            
+          const params = { userId: JSON.parse(localStorage.getItem("user")).id };
+          const url = new URL('http://localhost:8080/api/expenses');
+          Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
-  fetchExpenses();
-}, [router]);
+          const res = await fetch(url, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+         
+        });
+        console.log("RES", res)
+        if (!res.ok) 
+          throw new Error("Failed to fetch expenses");
+        const data = await res.json();
+        setExpenses(data);
+      } catch (err) {
+        console.error("Failed to fetch expenses:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      router.push("/"); // redirect if not logged in
+      return;
+    }
+
+    const parsedUser = JSON.parse(storedUser);
+    setUser(parsedUser);
+
+    fetchExpenses();
+  }, [router]);
   const handleLogout = () => {
     localStorage.removeItem("user");
     router.push("/");
+  };
+
+  const handleAddExpense = () => {
+    router.push("/create_expense");
   };
 
   if (!user) return <div className={styles.container}>Loading...</div>;
@@ -91,11 +93,16 @@ export default function Dashboard() {
         You are logged in as <strong>{user.role}</strong>
       </h1>
 
+      <button onClick={handleAddExpense} className={styles.logoutButton}>
+        Add Expense
+      </button>
+      <br></br>
       <button onClick={handleLogout} className={styles.logoutButton}>
         Logout
       </button>
+      
 
-      {user.role === "MANAGER" && (
+      
         <div className={styles.expensesSection}>
           <h2>Expenses for your organization</h2>
           {loading ? (
@@ -119,7 +126,7 @@ export default function Dashboard() {
                 {expenses.map((exp) => (
                   <tr key={exp.id}>
                     <td>{exp.id}</td>
-                    <td>{exp.title}</td>
+                    <td>{exp.description}</td>
                     <td>{exp.amount}</td>
                     <td>{new Date(exp.date).toLocaleDateString()}</td>
                     <td>{exp.status}</td>
@@ -129,7 +136,26 @@ export default function Dashboard() {
             </table>
           )}
         </div>
-      )}
+          <br></br>
+          <h2>Total Expenses by Category</h2>
+        <div>
+          <table className={styles.expensesTable}>
+              <thead>
+                <tr>
+                  <th>category</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(total_expenses).map(([category, total_expenditure]) => (
+                  <tr key={category}>
+                    <td>{category}</td>
+                    <td>{total_expenditure}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+        </div>
     </div>
   );
 }

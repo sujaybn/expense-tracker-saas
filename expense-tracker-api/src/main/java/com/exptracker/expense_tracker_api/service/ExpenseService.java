@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +70,20 @@ public class ExpenseService {
                 .toList();
     }
 
+    public List<ExpenseResponse> getAllExpensesByTenant(Long tenantId) {
+    return expenseRepository.findByTenantId(tenantId)
+            .stream()
+            .map(expense -> mapToExpenseResponse(expense)) // explicit lambda
+            .collect(Collectors.toList());
+}
+
+        public List<ExpenseResponse> getAllExpensesByUser(Long userId) {
+    return expenseRepository.findByUserId(userId)
+            .stream()
+            .map(this::mapToExpenseResponse)
+            .collect(Collectors.toList());
+}
+
     public ExpenseResponse getExpenseById(Long id) {
     Expense expense = expenseRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Expense not found"));
@@ -108,4 +123,5 @@ public class ExpenseService {
         }
         expenseRepository.deleteById(id);
     }
+
 }

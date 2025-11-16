@@ -61,40 +61,6 @@ export default function Login() {
         Don't have an account? <a href="/register">Register</a>
       </p>
       <div className="message">{message}</div>
-
-      {/* <style jsx>{`
-        .container {
-          max-width: 400px;
-          margin: 80px auto;
-          padding: 20px;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          text-align: center;
-        }
-        input {
-          width: 100%;
-          padding: 10px;
-          margin: 10px 0;
-        }
-        button {
-          width: 100%;
-          padding: 10px;
-          background: #0070f3;
-          color: white;
-          border: none;
-          cursor: pointer;
-        }
-        button:hover {
-          background: #005bb5;
-        }
-        .message {
-          color: red;
-          margin-top: 10px;
-        }
-        a {
-          color: #0070f3;
-        }
-      `}</style> */}
     </div>
   );
 }

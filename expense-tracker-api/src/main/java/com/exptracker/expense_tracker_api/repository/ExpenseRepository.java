@@ -22,4 +22,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     List<Expense> findByTenantIdAndCategory_Id(Long tenantId, Long categoryId);
 
+    List<Expense> findByTenantId(Long tenantId);
+
+
 }

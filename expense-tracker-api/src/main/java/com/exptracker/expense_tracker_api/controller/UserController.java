@@ -49,7 +49,7 @@ public class UserController {
     }
 
    //UPDATE USER
-    @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('TENANT_ADMIN')")
+    // @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('TENANT_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,

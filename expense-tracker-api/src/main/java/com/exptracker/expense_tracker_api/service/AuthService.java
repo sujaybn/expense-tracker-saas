@@ -21,27 +21,35 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse register(RegisterRequest req) {
+    Tenant tenant;
 
-        Tenant tenant = tenantRepository.findById(req.getTenantId())
+    if (req.getTenantId() != null) {
+        tenant = tenantRepository.findById(req.getTenantId())
                 .orElseThrow(() -> new RuntimeException("Tenant not found"));
-
-        User user = User.builder()
-                .email(req.getEmail())
-                .passwordHash(passwordEncoder.encode(req.getPassword()))
-                .role(RoleType.USER)
-                .tenant(tenant)
-                .build();
-
-        User saved = userRepository.save(user);
-
-        return UserResponse.builder()
-                .id(saved.getId())
-                .email(saved.getEmail())
-                .role(saved.getRole())
-                // .role(saved.getRole().name())
-                .tenantId(saved.getTenant().getId())
-                .build();
+    } else {
+        // Optional: assign to default tenant or create a new one
+        tenant = tenantRepository.findByName("Default Tenant")
+                .orElseGet(() -> tenantRepository.save(Tenant.builder().name("Default Tenant").build()));
     }
+
+    User user = User.builder()
+            .email(req.getEmail())
+            .name(req.getName())
+            .passwordHash(passwordEncoder.encode(req.getPassword()))
+            .role(RoleType.USER)
+            .tenant(tenant)
+            .build();
+
+    User saved = userRepository.save(user);
+
+    return UserResponse.builder()
+            .id(saved.getId())
+            .name(req.getName())
+            .email(saved.getEmail())
+            .role(saved.getRole())
+            .tenantId(saved.getTenant().getId())
+            .build();
+}
 
     public User login(LoginRequest req) {
         return userRepository.findByEmail(req.getEmail())

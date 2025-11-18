@@ -8,7 +8,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "categories")
+@Table(
+    name = "categories",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "tenant_id"})
+    }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +24,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String description;
 
     @JsonIgnore

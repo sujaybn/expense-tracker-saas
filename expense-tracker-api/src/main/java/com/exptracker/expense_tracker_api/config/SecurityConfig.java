@@ -30,6 +30,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
                 "/api/categories/**",
                 "/api/expenses/**",
                 "/api/expenses",
+                "/api/users/**",
+                "/api/tenants/**",
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
                 "/swagger-resources/**"

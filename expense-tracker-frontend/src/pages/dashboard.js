@@ -10,16 +10,16 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [total_expenses, setTotalExpenses] =useState({});
   const  categories =  {
-     3: "Travel",
-     4: "Bank",
-     5: "Office Supplies "
+     1: "Travel",
+     2: "Bank",
+     3: "Office Supplies "
   };
 
 
   useEffect(() => {
     console.log(expenses);    
     const currentTotal = {
-      ...total_expenses
+      // ...total_expenses
     }; 
     expenses.forEach(
       expense => {

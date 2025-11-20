@@ -24,9 +24,8 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> getCategories(
-            @RequestParam Long tenantId 
     ) {
-        return ResponseEntity.ok(categoryService.getAllCategories(tenantId));
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
     @GetMapping("/{id}")

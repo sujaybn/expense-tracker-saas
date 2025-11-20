@@ -15,6 +15,7 @@ SELECT id, name, tenant_id FROM categories;
 INSERT INTO tenants (name) VALUES ('Default Tenant');
 INSERT INTO categories (name, tenant_id) VALUES ('General', 1);
 
+DELETE FROM expenses where id = 6;
 
 
 ALTER TABLE users ADD COLUMN name VARCHAR(255);
@@ -40,3 +41,4 @@ INSERT INTO users (
 
 
 
+ALTER TABLE expenses DROP FOREIGN KEY FKjao23ohq935a4qrorwwsen0lr;

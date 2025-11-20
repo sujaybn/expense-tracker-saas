@@ -30,10 +30,10 @@ public class Category {
     @Column(nullable = false)
     private String description;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = false)
-    private Tenant tenant;
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name = "tenant_id", nullable = false)
+//    private Tenant tenant;
     
     @Column(nullable = false)
     private boolean deleted = false;

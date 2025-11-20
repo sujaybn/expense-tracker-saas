@@ -29,8 +29,12 @@ export default function CreateExpense() {
           const res = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formData)  
         });
+        if(res.ok){
+          alert('Expense saved successfully');
+          router.push('/dashboard');
+        }
         if (!res.ok) 
           throw new Error("Failed to create expenses");
       } catch (err) {
@@ -122,9 +126,9 @@ export default function CreateExpense() {
               required
               style={{ width: "100%", padding: "8px", marginTop: "4px" }}
             >
-              <option value="3">Travel</option>
-              <option value="4">Bank</option>
-              <option value="5">Office Supplies</option>
+              <option value="1">Travel</option>
+              <option value="2">Bank</option>
+              <option value="3">Office Supplies</option>
             </select>
           </div>
 

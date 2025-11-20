@@ -1,8 +1,6 @@
 # Expense Tracker SaaS  
 A multi-tenant expense tracking backend built with Spring Boot, MySQL, and a clean layered architecture. The goal of this project is to demonstrate a simple yet well-structured SaaS platform where multiple tenants can register, add users, and manage expenses independently.
 
-This repository is created and maintained by **@sujaybn**.
-
 ---
 
 ## Overview  
@@ -188,16 +186,3 @@ You will find the complete list of available APIs.
 
 ---
 
-## Project Folder Structure
-
-
-```
-src/main/java/com/exptracker/
-  ├── controller
-  ├── dto
-  ├── entity
-  ├── enums
-  ├── repository
-  ├── security
-  └── service
-```

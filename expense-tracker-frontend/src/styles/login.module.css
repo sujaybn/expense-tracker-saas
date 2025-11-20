@@ -1,33 +1,82 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* Container */
 .container {
   max-width: 400px;
-  margin: 80px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: white;
+  margin: 60px auto;
+  padding: 35px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Elegant heading */
+.title {
+  font-family: "Outfit", sans-serif;
+  color: #e07b39;
+  text-align: center;
+  font-weight: 400; /* lighter than before */
+  font-size: 1.6rem; /* smaller and elegant */
+  margin-bottom: 25px;
+  text-transform: none; /* remove all caps */
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 1px solid #f2c79e;
+  transition: border-color 0.3s, box-shadow 0.2s;
+}
+
+.input:focus {
+  border-color: #e07b39;
+  box-shadow: 0 0 5px rgba(224,123,57,0.3);
+  outline: none;
+}
+
+/* Submit Button */
+.button {
+  width: 100%;
+  padding: 14px;
+  background-color: #f2994a;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.button:hover {
+  background-color: #e07b39;
+  transform: translateY(-2px);
+}
+
+/* Message */
+.message {
+  color: red;
+  margin-top: 15px;
   text-align: center;
 }
 
-.container input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+/* Register link */
+.link {
+  color: #f2994a;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 15px;
+  text-align: center;
+  transition: color 0.3s;
 }
 
-.container button {
-  width: 100%;
-  padding: 10px;
-  background: #0070f3;
-  color: white;
-  border: none;
-  transition: 0.2s;
+.link:hover {
+  color: #237d89ff;
 }
 
-.container button:hover {
-  background: #005bb5;
-}
-
-.message {
-  color: red;
-  margin-top: 10px;
+.body{
+  background : White;
 }

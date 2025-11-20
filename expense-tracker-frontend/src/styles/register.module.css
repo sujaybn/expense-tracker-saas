@@ -1,32 +1,82 @@
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 .container {
   max-width: 400px;
   margin: 60px auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #f2c79e; /* light orange border instead of gray */
   border-radius: 8px;
   background-color: white;
   text-align: center;
+  font-family: "Outfit", sans-serif;
+
+}
+
+.title {
+  font-family: "Outfit", sans-serif;
+  color: #e07b39;
+  text-align: center;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 25px;
+  text-transform: none; /* remove all caps */
 }
 
 .container input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
+  border: 1px solid #f2c79e; /* soft orange border */
+  border-radius: 6px;
+  transition: border-color 0.3s, box-shadow 0.2s;
+}
+
+.container input:focus {
+  border-color: #e07b39; /* orange accent on focus */
+  box-shadow: 0 0 5px rgba(224,123,57,0.3);
+  outline: none;
 }
 
 .container button {
   width: 100%;
   padding: 10px;
-  background: #0070f3;
+  background: #f2994a; /* light orange button */
   color: white;
   border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s;
 }
 
 .container button:hover {
-  background: #005bb5;
+  background: #e07b39; /* darker orange on hover */
 }
 
 .message {
   color: red;
   margin-top: 10px;
+}
+
+/* Optional: subtle placeholder color */
+.container input::placeholder {
+  color: #b0896f;
+}
+
+.body {
+  background : white;
+}
+
+.link {
+  color: #f2994a;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 15px;
+  text-align: center;
+  transition: color 0.3s;
+}
+.link:hover {
+  color: #237d89ff;
 }

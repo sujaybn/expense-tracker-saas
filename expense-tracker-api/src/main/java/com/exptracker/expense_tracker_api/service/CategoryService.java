@@ -3,9 +3,7 @@ package com.exptracker.expense_tracker_api.service;
 import com.exptracker.expense_tracker_api.dto.CategoryRequest;
 import com.exptracker.expense_tracker_api.dto.CategoryResponse;
 import com.exptracker.expense_tracker_api.entity.Category;
-import com.exptracker.expense_tracker_api.entity.Tenant;
 import com.exptracker.expense_tracker_api.repository.CategoryRepository;
-import com.exptracker.expense_tracker_api.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +14,13 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final TenantRepository tenantRepository;
 
     // CREATE
     public CategoryResponse createCategory(CategoryRequest request) {
-        Tenant tenant = tenantRepository.findById(request.getTenantId())
-                .orElseThrow(() -> new RuntimeException("Tenant not found"));
 
         Category category = Category.builder()
                 .name(request.getName())
                 .description(request.getDescription())
-                .tenant(tenant)
                 .build();
 
         categoryRepository.save(category);
@@ -39,13 +33,12 @@ public class CategoryService {
                 .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
-                .tenantId(category.getTenant().getId())
                 .build();
     }
 
-    // GET ALL BY TENANT
-    public List<CategoryResponse> getAllCategories(Long tenantId) {
-        return categoryRepository.findByTenantId(tenantId)
+    // GET ALL CATEGORIES
+    public List<CategoryResponse> getAllCategories() {
+        return categoryRepository.findAll()
                 .stream()
                 .map(this::mapToCategoryResponse)
                 .toList();

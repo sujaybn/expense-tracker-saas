@@ -1,6 +1,6 @@
-// src/pages/register.js
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import styles from "../styles/register.module.css";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ export default function Register() {
   useEffect(() => {
     const fetchTenants = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/tenants"); // your endpoint to get all tenants
+        const res = await fetch("http://localhost:8080/api/tenants");
         if (!res.ok) throw new Error("Failed to fetch tenants");
         const data = await res.json();
         setTenants(data);
@@ -34,41 +34,36 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage(""); // clear old messages
+    e.preventDefault();
+    setMessage("");
 
-  try {
-    const res = await fetch("http://localhost:8080/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch("http://localhost:8080/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    if (res.ok) {
-      // Optionally parse response if needed
-      // const data = await res.json();
-
-      // Redirect after successful registration
-      router.push("/");
-    } else {
-      // Parse error body safely
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = { message: "Registration failed" };
+      if (res.ok) {
+        router.push("/"); // Redirect after successful registration
+      } else {
+        let data;
+        try {
+          data = await res.json();
+        } catch {
+          data = { message: "Registration failed" };
+        }
+        setMessage(data.message);
       }
-      setMessage(data.message);
+    } catch (err) {
+      console.error("Registration error:", err);
+      setMessage("Network error");
     }
-  } catch (err) {
-    console.error("Registration error:", err);
-    setMessage("Network error");
-  }
-};
+  };
 
   return (
-    <div className="container">
-      <h1>Register</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Create Account</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -76,6 +71,7 @@ export default function Register() {
           placeholder="Full Name"
           onChange={handleChange}
           required
+          className={styles.input}
         />
         <input
           type="email"
@@ -83,6 +79,7 @@ export default function Register() {
           placeholder="Email"
           onChange={handleChange}
           required
+          className={styles.input}
         />
         <input
           type="password"
@@ -90,12 +87,14 @@ export default function Register() {
           placeholder="Password"
           onChange={handleChange}
           required
+          className={styles.input}
         />
         <select
           name="tenantId"
           value={formData.tenantId}
           onChange={handleChange}
           required
+          className={styles.input}
         >
           <option value="">Select Company</option>
           {tenants.map((tenant) => (
@@ -104,9 +103,15 @@ export default function Register() {
             </option>
           ))}
         </select>
-        <button type="submit">Register</button>
+        <button type="submit" className={styles.button}>
+          Register
+        </button>
+
+        <p className={styles.link}>
+        Alredy have an account? <a href="/">Login</a>
+      </p>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 }

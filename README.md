@@ -237,8 +237,6 @@ You will find the complete list of available APIs.
 | PUT    | /api/users/{id}      | Update user name, role, tenant |
 | DELETE | /api/users/{id}      | Delete user                   |
 
-
-
 ### Tenant APIs
 
 | Method | Endpoint            | Description           |
